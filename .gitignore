@@ -1,0 +1,5 @@
+/node_modules
+/.vscode
+/config/config.json
+package-lock.json
+sec/bestworld-eaa92-firebase-adminsdk-7qhca-cb97603db0.json
