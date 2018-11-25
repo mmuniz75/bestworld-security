@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT;
 
+/*
 var admin = require("firebase-admin");
 
 admin.initializeApp({
@@ -18,7 +19,7 @@ admin.initializeApp({
     }),
     databaseURL: "https://bestworld-eaa92.firebaseio.com"
   });
-
+*/
 app.post('/login', (req, res) => {
 
     let adminStatus = false;
