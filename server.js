@@ -8,36 +8,9 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT;
 
-
-var admin = require("firebase-admin");
-
-
-console.log('email:',process.env.CLIENT_EMAIL);
-console.log('key:',process.env.PRIVATE_KEY);
-
-admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: 'bestworld-eaa92',
-      clientEmail: process.env.CLIENT_EMAIL,
-      privateKey: process.env.PRIVATE_KEY
-    }),
-    databaseURL: "https://bestworld-eaa92.firebaseio.com"
-  });
-
 app.post('/login', (req, res) => {
 
     let adminStatus = false;
-    /*
-    admin.auth().getUserByEmail('mmunizs1975@gmail.com').then((userAuth) => {
-        const currentCustomClaims = userAuth.customClaims;
-        if (currentCustomClaims.admin) {
-            adminStatus = true
-        }
-    
-      }).catch((error) => {
-        console.log(`${error.code}:${error.message}`);
-      });
-    */
     console.log(req.body);
 
     const user = {
