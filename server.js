@@ -8,7 +8,7 @@ const port = process.env.PORT;
 app.get('/login', (req, res) => {
     const user = {
         token: "123456789",
-        editor: true
+        admin: true
     }
     res.send(user);
   }, (e) => {
