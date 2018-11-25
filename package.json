@@ -2,13 +2,15 @@
   "name": "bestworld-security",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.16.4",
     "firebase-admin": "^6.2.0"
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node server.js",
+    "test-watch": "nodemon --exec 'npm test'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
