@@ -8,8 +8,12 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT;
 
-/*
+
 var admin = require("firebase-admin");
+
+
+console.log('email:',process.env.CLIENT_EMAIL);
+console.log('key:',process.env.PRIVATE_KEY);
 
 admin.initializeApp({
     credential: admin.credential.cert({
@@ -19,7 +23,7 @@ admin.initializeApp({
     }),
     databaseURL: "https://bestworld-eaa92.firebaseio.com"
   });
-*/
+
 app.post('/login', (req, res) => {
 
     let adminStatus = false;
