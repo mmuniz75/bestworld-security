@@ -5,10 +5,13 @@ const express = require('express');
 var app = express();
 const port = process.env.PORT;
 
+const configTest = process.env.TEST
+
 app.get('/login', (req, res) => {
     const user = {
         token: "123456789",
-        admin: true
+        admin: true,
+        config: configTest
     }
     res.send(user);
   }, (e) => {
