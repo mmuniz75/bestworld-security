@@ -22,6 +22,7 @@ admin.initializeApp({
 app.post('/login', (req, res) => {
 
     let adminStatus = false;
+    /*
     admin.auth().getUserByEmail('mmunizs1975@gmail.com').then((userAuth) => {
         const currentCustomClaims = userAuth.customClaims;
         if (currentCustomClaims.admin) {
@@ -31,7 +32,7 @@ app.post('/login', (req, res) => {
       }).catch((error) => {
         console.log(`${error.code}:${error.message}`);
       });
-
+    */
     console.log(req.body);
 
     const user = {
