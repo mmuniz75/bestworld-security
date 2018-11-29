@@ -29,13 +29,11 @@ app.post('/login', (req, res) => {
   let user = {};
    
   axios.post(process.env.AUTH_URL,authData).then((response) => {
-  
-    const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
 
     user = {
       token: response.data.idToken,
       id:response.data.localId,
-      expirationDate: expirationDate,
+      expirationDate: response.data.expiresIn,
       role: "default"
     }
 
