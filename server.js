@@ -33,7 +33,7 @@ app.post('/login', (req, res) => {
     user = {
       token: response.data.idToken,
       id:response.data.localId,
-      expirationDate: response.data.expiresIn,
+      expiresIn: response.data.expiresIn,
       role: "default"
     }
 
