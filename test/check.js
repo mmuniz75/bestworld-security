@@ -1,4 +1,4 @@
-require('./config/config');
+require('../config/config');
 
 var admin = require("firebase-admin");
 

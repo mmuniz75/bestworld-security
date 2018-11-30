@@ -1,8 +1,9 @@
 require('./config/config');
 
+
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
+const loginService = require('./services/login');
 
 var app = express();
 app.use(bodyParser.json());
@@ -15,42 +16,17 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 const port = process.env.PORT;
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
 
-  const authData = {
-    email: req.body.user,
-    password: req.body.password,
-    returnSecureToken: true
-  };
-
-  let user = {};
-   
-  axios.post(process.env.AUTH_URL,authData).then((response) => {
-
-    user = {
-      token: response.data.idToken,
-      id:response.data.localId,
-      expiresIn: response.data.expiresIn,
-      role: "default"
-    }
-
-    return axios.get(`${process.env.FIREBASE_SERVER}/usuarios.json?orderBy="email"&equalTo="${authData.email}"&auth=${user.token}`);
-
-  }).then((response) => {  
-    Object.keys(response.data).map(key => {
-      const userData = response.data[key];
-      user.role = userData.role;
-    });
-
-    res.send(user);
-        
-  }).catch((e) => {
-      res.status(e.response.status).send(e.response.data);
-  });
-
+  try{ 
+    const login = await loginService.login(req.body.user,req.body.password);
+    res.send(login.user);
+  }catch(e){
+    res.status(400).send({"error" :e.message});   
+  }
+    
 }, (e) => {
     res.status(400).send(e);
 });
