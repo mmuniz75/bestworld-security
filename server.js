@@ -4,6 +4,7 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const loginService = require('./services/login');
+const usersService = require('./services/users');
 
 var app = express();
 app.use(bodyParser.json());
@@ -19,14 +20,23 @@ app.use(function(req, res, next) {
 const port = process.env.PORT;
 
 app.post('/login', async (req, res) => {
-
   try{ 
     const login = await loginService.login(req.body.user,req.body.password);
     res.send(login.user);
   }catch(e){
     res.status(400).send({"error" :e.message});   
   }
-    
+}, (e) => {
+    res.status(400).send(e);
+});
+
+app.post('/users', async (req, res) => {
+  try{ 
+    await usersService.create(req.body.user,req.body.password,req.body.role,req.header('access-token'));
+    res.status(201).send();
+  }catch(e){
+    res.status(400).send({"error" :e.message});   
+  }
 }, (e) => {
     res.status(400).send(e);
 });

@@ -13,7 +13,7 @@ const login = async (email,password) => {
     let user = {};
     
     try{
-      const responseAuth = await axios.post(process.env.AUTH_URL,authData);
+      const responseAuth = await axios.post(`${process.env.GOOGLE_API_URL}/verifyPassword?key=${process.env.FIREBASE_KEY}`,authData);
 
       user = {
         token: responseAuth.data.idToken,
