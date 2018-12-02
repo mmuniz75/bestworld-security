@@ -54,13 +54,13 @@ const create = async (email,password,role,token) => {
 
 const validation = (email,password,role) => {
   if(!email)
-    throw new Error("user required");
+    throw new Error("USER_REQUIRED");
 
   if(!password)
-    throw new Error("password required");
+    throw new Error("PASSWORD_REQUIRED");
   
   if(!role)
-    throw new Error("role required");
+    throw new Error("ROLE_REQUIRED");
 
   if(role !== 'admin' && role !== 'editor' && role !== 'default')  
     throw new Error("role should be : admin or editor or default");
@@ -77,7 +77,7 @@ const checkRoke = (roleCreator,role) => {
   if(roleCreator === 'default' && role === 'default')
     return true;  
 
-  throw new Error(`${roleCreator} user's cannot create ${role} user's`);  
+  throw new Error("ROLE_FORBIDDEN");  
 
 }
 
