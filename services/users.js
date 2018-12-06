@@ -40,7 +40,9 @@ const list = async (token) => {
       return {"users": users};
           
     }catch(e) {
-        let message = e.response && e.response.data && e.response.data.error && e.response.data.error.message?e.response.data.error.message:e.response.data.error?e.response.data.error:e.message;
+        let message = e.response && e.response.data && e.response.data.error && e.response.data.error.message
+        ?e.response.data.error.message:e.response && e.response.data && e.response.data.error
+        ?e.response.data.error:e.message;
                 
         throw new Error(message);
     };
