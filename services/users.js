@@ -37,7 +37,7 @@ const list = async (token) => {
         users.push(user);              
       }); 
       
-      return {"users": users};
+      return users;
           
     }catch(e) {
         let message = e.response && e.response.data && e.response.data.error && e.response.data.error.message
