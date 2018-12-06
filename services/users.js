@@ -32,9 +32,12 @@ const list = async (token) => {
       const users = [];
       Object.keys(responseUsers.data).map(key => {
         const userData = responseUsers.data[key];
-        const user = {email: userData.email,
-                      role: userData.role};
-        users.push(user);              
+
+        if(userData) {
+          const user = {email: userData.email,
+                        role: userData.role};
+          users.push(user);              
+          }  
       }); 
       
       return users;
