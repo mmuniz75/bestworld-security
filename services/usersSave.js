@@ -43,7 +43,7 @@ const create = async (email,password,role,token) => {
 
       const resonseRole = await axios.post(`${process.env.FIREBASE_SERVER}/usuarios.json?&auth=${token}`,user);
       
-      return {"user": resonseRole.data};
+      return {"id": resonseRole.data.name};
           
     }catch(e) {
         let message = e.response && e.response.data && e.response.data.error?e.response.data.error.message:e.message;

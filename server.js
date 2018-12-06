@@ -33,8 +33,8 @@ app.post('/login', async (req, res) => {
 
 app.post('/users', async (req, res) => {
   try{ 
-    await usersService.create(req.body.user,req.body.password,req.body.role,req.header('access-token'));
-    res.status(201).send();
+    const response = await usersService.create(req.body.user,req.body.password,req.body.role,req.header('access-token'));
+    res.status(201).send(response);
   }catch(e){
     res.status(400).send({"error" :e.message});   
   }
