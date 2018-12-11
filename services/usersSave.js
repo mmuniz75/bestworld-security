@@ -59,7 +59,7 @@ const validation = (email,password,role) => {
   if(role !== 'admin' && role !== 'editor' && role !== 'default')  
     throw new Error("role should be : admin or editor or default");
 }
-const axios = require('axios');
+
 const checkRoke = (roleCreator,role) => {
   
   if(roleCreator === 'admin')
