@@ -55,9 +55,9 @@ app.get('/users', async (req, res) => {
     res.status(400).send(e);
 });
 
-app.delete('/users/{email}', async (req, res) => {
+app.delete('/users/:email', async (req, res) => {
   try{ 
-    const usersResponse = await usersService3.delete(req.body.user,req.header('access-token'));
+    const usersResponse = await usersService3.delete(req.params.email,req.header('access-token'));
     res.status(200).send();   
   }catch(e){
     res.status(400).send({"error" :e.message});   

@@ -6,8 +6,6 @@ const remove = async (email,token) => {
     const userUtil = require('./userUtil');
     const Blowfish = require('blowfish-security-lib');
 
-    const Blowfish = require('blowfish-security-lib');
-
     try{
 
       const creator = await userUtil.getUser(token);
