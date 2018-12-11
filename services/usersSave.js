@@ -3,25 +3,15 @@ require('../config/config');
 const create = async (email,password,role,token) => {
 
     const axios = require('axios');
+    const userUtil = require('./userUtil');
+
+    const Blowfish = require('blowfish-security-lib');
 
     validation(email,password,role);
 
     try{
 
-      const responseCreator = await axios.post(`${process.env.GOOGLE_API_URL}/getAccountInfo?key=${process.env.FIREBASE_KEY}`,{"idToken":token});
-
-      const creator = {
-        email : responseCreator.data.users[0].email,
-        id: responseCreator.data.users[0].localId,
-        role: "default"
-      }
-      
-      const responseRoleCreator = await axios.get(`${process.env.FIREBASE_SERVER}/usuarios.json?orderBy="email"&equalTo="${creator.email}"&auth=${token}`);
-
-      Object.keys(responseRoleCreator.data).map(key => {
-        const userData = responseRoleCreator.data[key];
-        creator.role = userData.role;
-      });    
+      const creator = await userUtil.getUser(token);
 
       checkRoke(creator.role,role);
   
@@ -35,10 +25,14 @@ const create = async (email,password,role,token) => {
     
       const responseUser = await axios.post(`${process.env.GOOGLE_API_URL}/signupNewUser?key=${process.env.FIREBASE_KEY}`,authData);
 
+      const bf = new Blowfish(process.env.SECRET_KEY);
+      var encrypted = bf.encrypt(password);
+      
       user = {
         email: email,
         role: role,
-        creatorId:creator.id
+        creatorId:creator.id,
+        password: encrypted
       };
 
       const resonseRole = await axios.post(`${process.env.FIREBASE_SERVER}/usuarios.json?&auth=${token}`,user);
@@ -65,7 +59,7 @@ const validation = (email,password,role) => {
   if(role !== 'admin' && role !== 'editor' && role !== 'default')  
     throw new Error("role should be : admin or editor or default");
 }
-
+const axios = require('axios');
 const checkRoke = (roleCreator,role) => {
   
   if(roleCreator === 'admin')

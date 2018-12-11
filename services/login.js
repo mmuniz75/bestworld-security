@@ -3,6 +3,7 @@ require('../config/config');
 const login = async (email,password) => {
 
     const axios = require('axios');
+    const userUtil = require('./userUtil');
 
     const authData = {
       email: email,
@@ -22,12 +23,7 @@ const login = async (email,password) => {
         role: "default"
       };
 
-      const resonseUser = await axios.get(`${process.env.FIREBASE_SERVER}/usuarios.json?orderBy="email"&equalTo="${authData.email}"&auth=${user.token}`);
-
-      Object.keys(resonseUser.data).map(key => {
-        const userData = resonseUser.data[key];
-        user.role = userData.role;
-      });    
+      user.role = await userUtil.getRole(authData.email,user.token);
 
       return {"user": user};
           
