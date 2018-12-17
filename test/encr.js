@@ -1,4 +1,4 @@
-require('../config/config');
+clearrequire('../config/config');
 
 const Crypto = require('cryptr');
 
