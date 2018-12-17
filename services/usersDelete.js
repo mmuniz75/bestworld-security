@@ -4,7 +4,7 @@ const remove = async (email,token) => {
 
     const axios = require('axios');
     const userUtil = require('./userUtil');
-    const Blowfish = require('blowfish-security-lib');
+    const Crypto = require('cryptr');
 
     try{
 
@@ -14,7 +14,7 @@ const remove = async (email,token) => {
 
       let userDetail = null;
 
-      Object.keys(userDetailGet.data).map(key => {
+      await Object.keys(userDetailGet.data).map(key => {
         userDetail = {
           id: key,
           password: userDetailGet.data[key].password,
@@ -26,9 +26,13 @@ const remove = async (email,token) => {
         throw new Error('Not grant to delete this user');
       }
 
-      const bf = new Blowfish(process.env.SECRET_KEY);
-      let password = bf.decrypt(userDetail.password);
-      const user = await userUtil.getToken(email,password.substring(0,password.length-1));
+      if(userDetail === null) {
+        throw new Error('User not found');
+      }
+
+      const cryptr = new Crypto(process.env.SECRET_KEY);
+      let password = cryptr.decrypt(userDetail.password);
+      const user = await userUtil.getToken(email,password);
       const authData = {idToken: user.token};      
 
       await axios.post(`${process.env.GOOGLE_API_URL}/deleteAccount?key=${process.env.FIREBASE_KEY}`,authData);

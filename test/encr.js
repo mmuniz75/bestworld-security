@@ -1,6 +1,9 @@
 require('../config/config');
 
-const Blowfish = require('blowfish-security-lib');
-const bf = new Blowfish(process.env.SECRET_KEY);
+const Crypto = require('cryptr');
 
-console.log(bf.encrypt(process.argv[2]));
+const cryptr = new Crypto(process.env.SECRET_KEY);
+const encode = cryptr.encrypt(process.argv[2]) ;
+console.log(encode);
+
+

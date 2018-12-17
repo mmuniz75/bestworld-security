@@ -5,7 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "axios": "^0.18.0",
-    "blowfish-security-lib": "^1.0.1",
+    "cryptr": "^4.0.2",
     "express": "^4.16.4"
   },
   "devDependencies": {},

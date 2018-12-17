@@ -5,7 +5,7 @@ const create = async (email,password,role,token) => {
     const axios = require('axios');
     const userUtil = require('./userUtil');
 
-    const Blowfish = require('blowfish-security-lib');
+    const Crypto = require('cryptr');
 
     validation(email,password,role);
 
@@ -25,8 +25,8 @@ const create = async (email,password,role,token) => {
     
       const responseUser = await axios.post(`${process.env.GOOGLE_API_URL}/signupNewUser?key=${process.env.FIREBASE_KEY}`,authData);
 
-      const bf = new Blowfish(process.env.SECRET_KEY);
-      var encrypted = bf.encrypt(password);
+      const cryptr = new Crypto(process.env.SECRET_KEY);
+      var encrypted = cryptr.encrypt(password);
       
       user = {
         email: email,
