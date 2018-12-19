@@ -14,17 +14,19 @@ const getUserData = async (email,token,justRole) => {
 
     let role = "default";
     let creatorId = null;
+    let id = null;
 
     Object.keys(resonseUser.data).map(key => {
       const userData = resonseUser.data[key];
       role = userData.role;
       creatorId = userData.creatorId;
+      id = key;
     });
 
     if(justRole)
         return role;
     else
-        return {role,creatorId};    
+        return {role,creatorId,id};    
 }
 
 const getUser = async (token) => {
@@ -69,3 +71,4 @@ const getToken = async (email,password) => {
 module.exports.getRole = getRole;
 module.exports.getUser = getUser;
 module.exports.getToken = getToken;
+module.exports.getDetail = getDetail;
