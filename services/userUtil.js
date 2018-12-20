@@ -12,7 +12,7 @@ const getUserData = async (email,token,justRole) => {
 
     const resonseUser = await axios.get(`${process.env.FIREBASE_SERVER}/usuarios.json?orderBy="email"&equalTo="${email}"&auth=${token}`);
 
-    let role = "default";
+    let role = null;
     let creatorId = null;
     let id = null;
 

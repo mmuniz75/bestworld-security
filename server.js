@@ -36,7 +36,7 @@ app.post('/login', async (req, res) => {
 app.post('/users/:email/password/reset', async (req, res) => {
   try{ 
     const login = await loginService.resetPassword(req.params.email);
-    res.send(200);
+    res.sendStatus(200);
   }catch(e){
     res.status(400).send({"error" :e.message});   
   }

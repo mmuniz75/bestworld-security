@@ -25,17 +25,28 @@ const remove = async (email,token) => {
       if (creator.role !== 'admin' && userDetail.creatorId!= creator.id) {
         throw new Error('Not grant to delete this user');
       }
-
       if(userDetail === null) {
         throw new Error('User not found');
       }
+      
+      try{
+        if(!userDetail.password){
+          throw new Error('INVALID_PASSWORD');
+        }
+        const cryptr = new Crypto(process.env.SECRET_KEY);
+        let password = cryptr.decrypt(userDetail.password);
+        const user = await userUtil.getToken(email,password);
+        const authData = {idToken: user.token};      
+        await axios.post(`${process.env.GOOGLE_API_URL}/deleteAccount?key=${process.env.FIREBASE_KEY}`,authData);
+  
+      }catch(e){
+        if( !e.response || e.response.data.error.message!=='INVALID_PASSWORD'){
+          if(e.message!=='INVALID_PASSWORD')
+            throw e;
+        }  
+        console.log(`Email ${email} precisa ser removido manualmente`);  
+      }  
 
-      const cryptr = new Crypto(process.env.SECRET_KEY);
-      let password = cryptr.decrypt(userDetail.password);
-      const user = await userUtil.getToken(email,password);
-      const authData = {idToken: user.token};      
-
-      await axios.post(`${process.env.GOOGLE_API_URL}/deleteAccount?key=${process.env.FIREBASE_KEY}`,authData);
       await axios.delete(`${process.env.FIREBASE_SERVER}/usuarios/${userDetail.id}.json?auth=${token}`);
           
     }catch(e) {

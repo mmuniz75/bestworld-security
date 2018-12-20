@@ -9,6 +9,10 @@ const login = async (email,password) => {
       
       user.role = await userUtil.getRole(email,user.token);
 
+      if(!user.role) {
+        throw new Error("EMAIL_NOT_FOUND")
+      }
+
       if(user.role === 'disable') {
           throw new Error("USER_DISABLED")
       }
