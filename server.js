@@ -33,6 +33,17 @@ app.post('/login', async (req, res) => {
     res.status(400).send(e);
 });
 
+app.post('/users/:email/password/reset', async (req, res) => {
+  try{ 
+    const login = await loginService.resetPassword(req.params.email);
+    res.send(200);
+  }catch(e){
+    res.status(400).send({"error" :e.message});   
+  }
+}, (e) => {
+    res.status(400).send(e);
+});
+
 app.post('/users', async (req, res) => {
   try{ 
     const response = await usersService.create(req.body.user,req.body.password,req.body.role,req.header('access-token'));
