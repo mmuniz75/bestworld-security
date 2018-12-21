@@ -1,11 +1,14 @@
 require('../config/config');
 
+const axios = require('axios');
+const userUtil = require('./userUtil');
+const Crypto = require('cryptr');
+const emailService = require('../util/email')
+
+
 const remove = async (email,token) => {
 
-    const axios = require('axios');
-    const userUtil = require('./userUtil');
-    const Crypto = require('cryptr');
-
+    
     try{
 
       const creator = await userUtil.getUser(token);
@@ -44,7 +47,8 @@ const remove = async (email,token) => {
           if(e.message!=='INVALID_PASSWORD')
             throw e;
         }  
-        console.log(`Email ${email} precisa ser removido manualmente`);  
+        console.log(`Email ${email} precisa ser removido manualmente`); 
+        emailService.send(email); 
       }  
 
       await axios.delete(`${process.env.FIREBASE_SERVER}/usuarios/${userDetail.id}.json?auth=${token}`);
