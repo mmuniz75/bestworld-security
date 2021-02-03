@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "cors": "^2.8.5",
     "cryptr": "^4.0.2",
     "express": "^4.16.4",
     "nodemailer": "^4.7.0"
